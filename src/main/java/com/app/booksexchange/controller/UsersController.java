@@ -25,6 +25,7 @@ public class UsersController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public void getUsers(HttpServletResponse res) {
 		try {
+			res.addHeader("ContentType", "application/json");
 			List<Users> users = usersService.getUsersAll();
 			JSONArray mJSONArray = new JSONArray(Arrays.asList(users));
 			res.getWriter().write(mJSONArray.toString());
