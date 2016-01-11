@@ -1,11 +1,13 @@
 package com.app.booksexchange.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,17 +25,12 @@ public class UsersController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public void getUsers(HttpServletResponse res) {
 		try {
-			res.getWriter().write("[");
 			List<Users> users = usersService.getUsersAll();
-
-			for (Users us : users) {
-				res.getWriter().write(us.toString());
-			}
-			
-			res.getWriter().write("]");
+			JSONArray mJSONArray = new JSONArray(Arrays.asList(users));
+			res.getWriter().write(mJSONArray.toString());
 
 		} catch (IOException e) {
-			
+
 		}
 	}
 

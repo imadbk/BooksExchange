@@ -33,7 +33,7 @@ public class UsersService {
 	public Users getUserById(Integer id) {
 		Session session = sessionFactory.getCurrentSession();
 
-		Query query = session.getNamedQuery("AppUser.findByUserId")
+		Query query = session.getNamedQuery("Users.findByUserId")
 				.setParameter("userId", id);
 		return (Users) query.list().get(0);
 	}
@@ -42,7 +42,7 @@ public class UsersService {
 	public Users getUserByUsername(String username) {
 		Session session = sessionFactory.getCurrentSession();
 
-		Query query = session.getNamedQuery("AppUser.findByUsername")
+		Query query = session.getNamedQuery("Users.findByUsername")
 				.setParameter("username", username);
 		return (query.list().size() > 0 ? (Users) query.list().get(0)
 				: null);
