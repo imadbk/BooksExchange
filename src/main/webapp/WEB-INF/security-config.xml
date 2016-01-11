@@ -1,0 +1,44 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <!-- enable use-expressions -->
+    <http auto-config="true" use-expressions="true">
+        <!-- 		<intercept-url pattern="/admin**" access="hasRole('ROLE_GED_CFG')" /> -->
+<!--         <intercept-url pattern="/users**" access="hasRole('ADMIN') or hasRole('CONFIG')" /> -->
+        <intercept-url pattern="/**" access="permitAll" />
+
+        <!-- access denied page -->
+        <access-denied-handler error-page="/403" />
+        <form-login 
+            login-page="/login"
+            authentication-success-handler-ref="customAuthenticationSuccessHandler"
+            username-parameter="username"
+            password-parameter="password"
+            authentication-failure-url="/login?error"
+        />
+        <logout  logout-success-url="/login?logout" delete-cookies="JSESSIONID" invalidate-session="true" />
+		<session-management>
+		  <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="/login" session-registry-ref="sessionRegistry" />
+		</session-management>
+        
+        <!-- enable csrf protection -->
+        <!-- 		<csrf /> -->
+        <headers>
+       		<cache-control />
+    	</headers>
+    </http>
+    <authentication-manager>
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder hash="bcrypt" />
+        </authentication-provider>
+    </authentication-manager>
+    <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
+    <beans:bean 
+        id="customAuthenticationSuccessHandler" 
+        class="com.app.booksexchange.security.CustomAuthenticationSuccessHandler"
+    />
+</beans:beans>
