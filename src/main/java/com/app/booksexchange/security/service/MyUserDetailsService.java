@@ -78,7 +78,7 @@ public class MyUserDetailsService implements UserDetailsService {
 		if (rights != null && !rights.isEmpty()) {
 			// Build user's authorities
 			for (UsersRights right : rights) {
-				setAuths.add(new SimpleGrantedAuthority(right.getProfileId()
+				setAuths.add(new SimpleGrantedAuthority(right.getProfile()
 						.getProfileName()));
 			}
 		}

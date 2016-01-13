@@ -49,7 +49,7 @@ public class RightsService {
 	public boolean isAlreadyUserRight(UsersRights right){
 		
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("SELECT u FROM UsersRights u WHERE u.userId = " + right.getUserId().getUserId() +" and u.profileId = " + right.getProfileId().getProfileId() );
+		Query query = session.createQuery("SELECT u FROM UsersRights u WHERE u.userId = " + right.getUser().getUserId() +" and u.profileId = " + right.getProfile().getProfileId() );
 		return query.list().size() > 0;
 	}
 	public void add(UsersRights right) {

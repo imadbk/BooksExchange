@@ -18,15 +18,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.json.JSONObject;
 
 /**
  *
- * @author imadbk
+ * @author imad.bakli
  */
 @Entity
 @Table(name = "category_books")
@@ -43,8 +41,6 @@ public class CategoryBooks implements Serializable {
     @Column(name = "category_books_id")
     private Integer categoryBooksId;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 250)
     @Column(name = "name")
     private String name;
     @JoinColumn(name = "book", referencedColumnName = "book_id")
@@ -109,11 +105,10 @@ public class CategoryBooks implements Serializable {
 
     @Override
     public String toString() {
-    	
     	JSONObject obj = new JSONObject();
     	obj.put("category_books_id", categoryBooksId);
     	obj.put("name", name);
-    	obj.put("book", book.toString());
+    	obj.put("book", new JSONObject(book));
         return obj.toString();
     }
     

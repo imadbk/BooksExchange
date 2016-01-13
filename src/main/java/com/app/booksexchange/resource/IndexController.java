@@ -1,4 +1,4 @@
-package com.app.booksexchange.controller;
+package com.app.booksexchange.resource;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -72,33 +72,7 @@ public class UsersService {
 			session.update(user);
 	}
 
-//	@Transactional
-//	public void updateFailAttempts(String username) {
-//		Session session = sessionFactory.getCurrentSession();
-//		Users users = getUserByUsername(username);
-//		boolean locked = false;
-//		if (!StringUtils.isEmpty(users)) {
-//			users.setAttempts(users.getAttempts() + 1);
-//			if (users.getAttempts() >= 3) {
-//				users.setLocked("" + Boolean.TRUE);
-//				locked = true;
-//			}
-//			session.save(users);
-//			if (locked)
-//				throw new LockedException("User Account is locked!");
-//		}
-//
-//	}
 
-//	@Transactional
-//	public void resetFailAttempts(String username) {
-//		Session session = sessionFactory.getCurrentSession();
-//		Users users = getUserByUsername(username);
-//		if (!StringUtils.isEmpty(users)) {
-//			users.setAttempts(0);
-//			session.save(users);
-//		}
-//	}
 
 	@Transactional
 	public Users getUserAttempts(String username) {

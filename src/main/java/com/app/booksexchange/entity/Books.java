@@ -22,8 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -31,7 +29,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author imadbk
+ * @author imad.bakli
  */
 @Entity
 @Table(name = "books")
@@ -57,47 +55,37 @@ public class Books implements Serializable {
     @Column(name = "book_id")
     private Integer bookId;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "ISBN")
     private String isbn;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
     @Column(name = "title")
     private String title;
     @Column(name = "published_date")
     @Temporal(TemporalType.DATE)
     private Date publishedDate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "price")
     private float price;
-    @Size(max = 100)
     @Column(name = "EAN")
     private String ean;
-    @Size(max = 200)
     @Column(name = "publisher")
     private String publisher;
-    @Size(max = 500)
     @Column(name = "description")
     private String description;
     @Column(name = "page_count")
     private Integer pageCount;
-    @Size(max = 50)
     @Column(name = "langage")
     private String langage;
-    @Size(max = 255)
     @Column(name = "image_url")
     private String imageUrl;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
+    private Collection<AuthorBooks> authorBooksCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
     private Collection<CategoryBooks> categoryBooksCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookId")
-    private Collection<UserBooks> userBooksCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookId")
     private Collection<UserBooksWish> userBooksWishCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book")
-    private Collection<AuthorBooks> authorBooksCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookId")
+    private Collection<UserBooks> userBooksCollection;
 
     public Books() {
     }
@@ -202,21 +190,21 @@ public class Books implements Serializable {
     }
 
     @XmlTransient
+    public Collection<AuthorBooks> getAuthorBooksCollection() {
+        return authorBooksCollection;
+    }
+
+    public void setAuthorBooksCollection(Collection<AuthorBooks> authorBooksCollection) {
+        this.authorBooksCollection = authorBooksCollection;
+    }
+
+    @XmlTransient
     public Collection<CategoryBooks> getCategoryBooksCollection() {
         return categoryBooksCollection;
     }
 
     public void setCategoryBooksCollection(Collection<CategoryBooks> categoryBooksCollection) {
         this.categoryBooksCollection = categoryBooksCollection;
-    }
-
-    @XmlTransient
-    public Collection<UserBooks> getUserBooksCollection() {
-        return userBooksCollection;
-    }
-
-    public void setUserBooksCollection(Collection<UserBooks> userBooksCollection) {
-        this.userBooksCollection = userBooksCollection;
     }
 
     @XmlTransient
@@ -229,12 +217,12 @@ public class Books implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AuthorBooks> getAuthorBooksCollection() {
-        return authorBooksCollection;
+    public Collection<UserBooks> getUserBooksCollection() {
+        return userBooksCollection;
     }
 
-    public void setAuthorBooksCollection(Collection<AuthorBooks> authorBooksCollection) {
-        this.authorBooksCollection = authorBooksCollection;
+    public void setUserBooksCollection(Collection<UserBooks> userBooksCollection) {
+        this.userBooksCollection = userBooksCollection;
     }
 
     @Override
@@ -259,7 +247,6 @@ public class Books implements Serializable {
 
     @Override
     public String toString() {
-    	
     	JSONObject obj = new JSONObject();
     	obj.put("book_id", bookId);
     	obj.put("ISBN", isbn);

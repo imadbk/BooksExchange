@@ -1,8 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.app.booksexchange.entity;
 
-
 import java.io.Serializable;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,75 +17,78 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ibakli
+ * @author imad.bakli
  */
 @Entity
 @Table(name = "users_rights")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "UsersRights.findAll", query = "SELECT u FROM UsersRights u"),
-    @NamedQuery(name = "UsersRights.findByRightId", query = "SELECT u FROM UsersRights u WHERE u.rightId = :rightId")})
+    @NamedQuery(name = "UsersRights.findByUsersRightsId", query = "SELECT u FROM UsersRights u WHERE u.usersRightsId = :usersRightsId")})
 public class UsersRights implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "right_id")
-    private Integer rightId;
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @Column(name = "users_rights_id")
+    private Integer usersRightsId;
+    @JoinColumn(name = "profile", referencedColumnName = "profile_id")
     @ManyToOne(optional = false)
-    private Users userId;
-    @JoinColumn(name = "profile_id", referencedColumnName = "profile_id")
+    private Profiles profile;
+    @JoinColumn(name = "user", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
-    private Profiles profileId;
+    private Users user;
 
     public UsersRights() {
     }
 
-    public UsersRights(Integer rightId) {
-        this.rightId = rightId;
+    public UsersRights(Integer usersRightsId) {
+        this.usersRightsId = usersRightsId;
     }
 
-    public Integer getRightId() {
-        return rightId;
+    public Integer getUsersRightsId() {
+        return usersRightsId;
     }
 
-    public void setRightId(Integer rightId) {
-        this.rightId = rightId;
+    public void setUsersRightsId(Integer usersRightsId) {
+        this.usersRightsId = usersRightsId;
     }
 
-    public Users getUserId() {
-        return userId;
+    public Profiles getProfile() {
+        return profile;
     }
 
-    public void setUserId(Users userId) {
-        this.userId = userId;
+    public void setProfile(Profiles profile) {
+        this.profile = profile;
     }
 
-    public Profiles getProfileId() {
-        return profileId;
+    public Users getUser() {
+        return user;
     }
 
-    public void setProfileId(Profiles profileId) {
-        this.profileId = profileId;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rightId != null ? rightId.hashCode() : 0);
+        hash += (usersRightsId != null ? usersRightsId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof UsersRights)) {
             return false;
         }
         UsersRights other = (UsersRights) object;
-        if ((this.rightId == null && other.rightId != null) || (this.rightId != null && !this.rightId.equals(other.rightId))) {
+        if ((this.usersRightsId == null && other.usersRightsId != null) || (this.usersRightsId != null && !this.usersRightsId.equals(other.usersRightsId))) {
             return false;
         }
         return true;
@@ -90,7 +96,7 @@ public class UsersRights implements Serializable {
 
     @Override
     public String toString() {
-        return "com.imad.elseGroup.controller.UsersRights[ rightId=" + rightId + " ]";
+        return "com.app.booksexchange.UsersRights[ usersRightsId=" + usersRightsId + " ]";
     }
     
 }
